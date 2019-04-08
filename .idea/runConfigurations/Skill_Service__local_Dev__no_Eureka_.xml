@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Skill Service (local Dev, no Eureka)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="skill" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="de.hbt.power.SkillDbApplication" />
+    <option name="ACTIVE_PROFILES" value="localDevNoEureka" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
