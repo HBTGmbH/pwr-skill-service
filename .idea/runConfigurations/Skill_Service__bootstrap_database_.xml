@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Skill Service (bootstrap database)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="skill" />
+    <module name="pwr-skill-service" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="de.hbt.power.SkillDbApplication" />
     <option name="ACTIVE_PROFILES" value="bootstrapDatabase" />
     <option name="ALTERNATIVE_JRE_PATH" />
