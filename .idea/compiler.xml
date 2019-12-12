@@ -2,20 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="skill" />
+        <module name="pwr-skill-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="skill" target="12" />
+      <module name="pwr-skill-service" target="12" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="skill" options="-parameters" />
+      <module name="pwr-skill-service" options="-parameters" />
     </option>
   </component>
 </project>

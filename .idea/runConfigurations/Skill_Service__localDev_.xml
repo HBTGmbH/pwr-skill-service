@@ -1,8 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Skill Service (localDev)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="skill" />
+    <module name="pwr-skill-service" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="de.hbt.power.SkillDbApplication" />
     <option name="ACTIVE_PROFILES" value="localDev" />
+    <option name="VM_PARAMETERS" value="-Dspring.config.location=$PROJECT_DIR$/../../Power-Configs/skill.yml" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <method v="2">
       <option name="Make" enabled="true" />
