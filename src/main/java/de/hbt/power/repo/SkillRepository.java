@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,10 @@ public interface SkillRepository extends JpaRepository<Skill, Integer>, CrudRepo
     Optional<Skill> getByQualifiersContaining(String localizedQualifiers);
 
     List<Skill> findAllByCategory_Id(Integer categoryId);
+
+    List<Skill> findAllByQualifierInAndCategory_Id(Collection<String> qualifier, Integer categoryId);
+
+    List<Skill> findAllByQualifierIn(Collection<String> qualifier);
 
     List<Skill> findAllByCategory(SkillCategory category);
 

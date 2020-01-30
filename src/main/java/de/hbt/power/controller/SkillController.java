@@ -16,10 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static de.hbt.power.exception.SkillServiceException.categoryNotFound;
 import static de.hbt.power.exception.SkillServiceException.skillNotFound;
@@ -149,6 +147,44 @@ public class SkillController {
         return ResponseEntity.ok(responseSkill);
     }
 
+    /**
+     * Categorizes a list of skills if no SkillCategory was set before.
+     * Creates respective skills if they don't exist yet.
+     * Returns a List of all updated skills.
+     *
+     * @return List of updated skills
+     */
+    @ApiOperation(value = "Updates the category of the given skill. If no skill was found, the skill is created", response = SkillCategory.class)
+    @PostMapping("/categorize")
+    public ResponseEntity<List<Skill>> updateAndGetCategories(@RequestParam(value="list") String[] qualifiers) {
+
+        Set<String> distinctQualifiers = new HashSet<>(Arrays.asList(qualifiers));
+        //List of all skills with any one of the given qualifiers in the database
+        List<Skill> existingSkills = skillRepository.findAllByQualifierIn(distinctQualifiers);
+        //Set of all given qualifiers found in the database
+        Set<String> existingSkillQualifiers = existingSkills.stream()
+                .map(Skill::getQualifier)
+                .collect(Collectors.toSet());
+        //Filtering all Skills without a category from existing skills
+        List<Skill> skillsWithoutCategory = existingSkills.stream()
+                .filter(skill -> skill.getCategory() == null)
+                .collect(Collectors.toList());
+        //Creating all skills that don't exist yet
+        Set<String> newSkills = new HashSet<>(distinctQualifiers);
+        newSkills.removeAll(existingSkillQualifiers);
+        for (String qualifier : newSkills) {
+            skillsWithoutCategory.add(skillService.createSkill(qualifier));
+        }
+        //Categorizing all skills that don't have a category yet, including those that were just created
+        if (!skillsWithoutCategory.isEmpty()) {
+            for (Skill s : skillsWithoutCategory) {
+                Skill categorizedSkill = categoryService.categorizeSkill(s);
+                skillRepository.save(categorizedSkill);
+            }
+        }
+
+        return ResponseEntity.ok(skillsWithoutCategory);
+    }
 
     /**
      * Returns the category for the requested SkillId, categorizes the Skill if no SkillCategory was set before.
