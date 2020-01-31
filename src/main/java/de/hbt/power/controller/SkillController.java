@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -156,9 +157,8 @@ public class SkillController {
      */
     @ApiOperation(value = "Updates the category of the given skill. If no skill was found, the skill is created", response = SkillCategory.class)
     @PostMapping("/categorize")
-    public ResponseEntity<List<Skill>> updateAndGetCategories(@RequestParam(value="list") String[] qualifiers) {
-
-        Set<String> distinctQualifiers = new HashSet<>(Arrays.asList(qualifiers));
+    public ResponseEntity<List<Skill>> updateAndGetCategories(@RequestParam(value="list") Collection<String> qualifiers) {
+        Set<String> distinctQualifiers = new HashSet<>(qualifiers);
         //List of all skills with any one of the given qualifiers in the database
         List<Skill> existingSkills = skillRepository.findAllByQualifierIn(distinctQualifiers);
         //Set of all given qualifiers found in the database
